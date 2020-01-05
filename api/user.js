@@ -4,7 +4,7 @@ const {Users} = require('../db/index').models
 //get user
 router.get('/', (req, res) => {
   const { user } = req
-  if (user) res.send(user)
+  if (user && user.id) res.send(user)
   else res.status(404).send('User not found')
 });
 
