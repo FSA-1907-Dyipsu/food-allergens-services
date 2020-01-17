@@ -3,11 +3,14 @@ const GoogleStrategy = require('passport-google-oauth20');
 const { Users } = require('../db/index').models;
 
 passport.serializeUser((user, done) => {
+  console.log('serializeUser->', user)
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
+  console.log('deserializeUser id->', id)
   const user = await Users.findByPk(id);
+  console.log('deserializeUser user->', user)
   done(null, user);
 });
 
@@ -26,6 +29,7 @@ passport.use(
       const email = profile.emails[0].value;
       user = await Users.create({ name, email, googleId });
     }
+    console.log('passport user->', user)
     done(null, user)
   })
 )
