@@ -4,6 +4,7 @@ const { Users } = require('../db/index').models;
 
 passport.serializeUser((user, done) => {
   console.log('serializeUser->', user)
+  console.log('id-->', user.id)
   done(null, user.id);
 });
 
@@ -28,6 +29,7 @@ passport.use(
       const name = profile.displayName;
       const email = profile.emails[0].value;
       user = await Users.create({ name, email, googleId });
+      console.log('passport creating user->', user)
     }
     console.log('passport user->', user)
     done(null, user)
