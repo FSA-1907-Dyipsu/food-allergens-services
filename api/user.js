@@ -1,35 +1,34 @@
-const router = require('express').Router();
-const {Users} = require('../db/index').models
+const router = require("express").Router();
+const { Users } = require("../db/index").models;
 
 //get user
-router.get('/', (req, res) => {
-  const { user } = req
-  console.log('user is--->', user)
-  if (user && user.id) res.send(user)
-  else res.status(404).send('User not found')
+router.get("/", (req, res) => {
+  const { user } = req;
+  if (user && user.id) res.send(user);
+  else res.status(404).send("User not found");
 });
 
 //get specific user
-router.get('/:id', (req,res,next) => {
+router.get("/:id", (req, res, next) => {
   Users.findByPk(req.params.id)
     .then(user => res.send(user))
-    .catch(next)
-})
+    .catch(next);
+});
 
 //create user (if needed)
-router.post('/create', (req,res,next) =>{
+router.post("/create", (req, res, next) => {
   Users.create(req.body)
-    .then(user=> res.send(user))
+    .then(user => res.send(user))
     .then(() => res.status(201))
-    .catch(next)
-})
+    .catch(next);
+});
 
 //update user (if needed)
-router.put('/update', (req,res,next) =>{ 
+router.put("/update", (req, res, next) => {
   Users.findByPk(req.params.id)
     .then(user => user.update(req.body))
     .then(user => res.send(user))
-    .catch(next)
-})
+    .catch(next);
+});
 
 module.exports = router;
